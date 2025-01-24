@@ -63,6 +63,15 @@ const admin_controller = {
             res.status(500).send({ message: error.message })
         }
     },
+    add_user : async (req , res ) => {
+        try {
+            const {nationality ,birth_date ,national_id,last_name ,name} = req.body
+            const user = await user_model.create(req.body)
+            res.status(200).send({ message: "تم اضافة المستخدم بنجاح" })
+        } catch (error) {
+            res.status(500).send({ message: error.message })
+        }
+    },
 }
 
 module.exports = admin_controller

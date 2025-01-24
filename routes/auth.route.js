@@ -4,6 +4,7 @@ const { authentication } = require("../middlewares/auth.middleware");
 
 router.post("/main/login", authControl.login )
 router.get("/logout",authentication, authControl.logout)
+router.post("/user_login", authControl.user_login)
 
 // router.post("/forgetPassword", authControl.forgetPassword);
 // router.post("/verifyPassResetCode", authControl.verifyPassResetCode);

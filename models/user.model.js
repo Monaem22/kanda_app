@@ -10,10 +10,17 @@ const users_Schema = new mongoose.Schema(
     address: String,
     student_mobile: String,
     parent_mobile: String,
-    
+    //user auth
+    nationality: String,
+    birth_date: String,
+    national_id: {
+      type: String,
+    },
+    last_name: String,
     //admin
     name: {
       type: String,
+      required : [true, "username has been required"],
     },
     password: {
       type: String,
@@ -33,6 +40,7 @@ const users_Schema = new mongoose.Schema(
 );
 
 users_Schema.index({ name: 1 }, { unique: true });
+users_Schema.index({ national_id: 1 }, { unique: true });
 
 users_Schema.pre("save", async function (next) {
   const isModified = this.isModified("password");

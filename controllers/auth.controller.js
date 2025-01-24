@@ -9,7 +9,7 @@ const authUserController = {
             const { name, password } = req.body;
             const user = await user_model.findOne({ name })
             if (!user) {
-                return res.status(403).json({ message: " Inavlid name or password" });
+                return res.status(403).json({ message: " الاسم او الباصورد غير صحيح " });
             }
             const validPassword = await bcrypt.compare(password, user.password)
             if (!validPassword) {
@@ -19,25 +19,52 @@ const authUserController = {
             const token = await jwt.sign(
                 { id: user._id, role: user.role },
                 process.env.secret_key,
-                { expiresIn: '12h' }
+                { expiresIn: '2h' }
             )
             res.cookie("access_token", `barear ${token}`,
                 {
-                    // httpOnly: true,// Protect from client-side scripts
+                    httpOnly: true,// Protect from client-side scripts
                     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',//Testing for Secure HTTPS Connections
                     // secure: process.env.NODE_ENV === 'production' ? true : req.secure || req.headers['x-forwarded-proto'] === 'https' // Secure only in production for HTTPS
                     sameSite: 'strict',// Prevent CSRF attacks
                     // maxAge: 30 * 60 * 1000  , //after 30 minutes in milliseconds of inactivity.
-                    expires: new Date(Date.now() + 12 * 60 * 60 * 1000),
-                    // expires: new Date(Date.now() + 30 * 60 * 1000) // 30 minutes from now
+                    expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
                 }
             )
 
-            // user.tokens.push(token );
-            user.active = true;
-            await user.save();
+            return res.status(200).json({ message: " تم تسجيل الدخول بنجاح ", token })
+        } catch (error) {
+            res.status(500).json({ message: error.message })
+        }
+    },
+    user_login : async (req, res) => {
+        try {
+            const { name, last_name , nationality , birth_date , national_id } = req.body;
+            const user = await user_model.findOne({ name ,national_id})
+            if (!user) {
+                return res.status(403).json({ message: " خطا في البيانات أعد كتابتها لتتمكن من الدخول " });
+            }
+            if (user.nationality != nationality && user.national_id != national_id && user.birth_date != birth_date && user.last_name != last_name )
+            {
+                return res.status(403).json({message : " بيانات المستخدم غير صحيحه "})
+            }
+            const token = await jwt.sign(
+                { id: user._id, role: user.role },
+                process.env.secret_key,
+                { expiresIn: '2h' }
+            )
+            res.cookie("access_token", `barear ${token}`,
+                {
+                    httpOnly: true,// Protect from client-side scripts
+                    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',//Testing for Secure HTTPS Connections
+                    // secure: process.env.NODE_ENV === 'production' ? true : req.secure || req.headers['x-forwarded-proto'] === 'https' // Secure only in production for HTTPS
+                    sameSite: 'strict',// Prevent CSRF attacks
+                    // maxAge: 30 * 60 * 1000  , //after 30 minutes in milliseconds of inactivity.
+                    expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
+                }
+            )
 
-            return res.status(200).json({ message: "logIn is accepted", token })
+            return res.status(200).json({ message: " تم تسجيل الدخول بنجاح ", token })
         } catch (error) {
             res.status(500).json({ message: error.message })
         }
@@ -49,6 +76,7 @@ const authUserController = {
             await req.user.save()
             res.clearCookie("access_token");
             res.status(200).send("you are loged out")
+            
         } catch (error) {
             res.status(500).send({ message: error.message })
         }

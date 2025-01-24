@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const dbConnection = require("./config/DB_connection");
 const dotenv = require("dotenv");
-const Routes = require("./routes/index ");
+const Routes = require("./routes");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const rateLimiter = require("express-rate-limit");
@@ -18,7 +18,9 @@ const limiter = rateLimiter({
   validate: {xForwardedForHeader: false}
 })
 
-app.use(cors());
+app.use(cors({
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -30,7 +32,7 @@ app.all('*', (req, res) => {
   res.status(404).send('Not Found routes');
 })
 app.use((err, req, res) => {
-  // console.error(err.stack);
+  console.error(err.stack);
   res.status(500).send('Internal Server Error',err.message);
 });
 
