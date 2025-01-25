@@ -32,7 +32,7 @@ const users_Schema = new mongoose.Schema(
     gmail_Account: String,
     role: {
       type: String,
-      enum: ['user', 'admin'],
+      enum: ['user', 'admin' , 'Sadmin'],
       default: 'user',
   },
 
