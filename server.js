@@ -19,6 +19,8 @@ const limiter = rateLimiter({
 })
 
 app.use(cors({
+  // origin: ['http://localhost:5173', 'https://your-production-domain.com'], ,
+  origin: 'http://localhost:5173' ,
   credentials: true
 }));
 app.use(express.json());
