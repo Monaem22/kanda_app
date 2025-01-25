@@ -8,13 +8,13 @@ const authentication = async (req, res, next) => {
             return res.status(403).send({ message: " unauthorized user...please login " })
         }
         let token = req?.cookies?.access_token?.split(" ")[1]
-
         let validToken = await jwt.verify(token, process.env.secret_key)
+
         if (!validToken) {
             console.log( " something wrong in valid token " );
             return res.status(403).send({ message: " unauthorized user...login please " })
         }
-        let user = await user_model.findById(validToken.id)
+        let user = await user_model.findById(validToken.id)        
         if (!user) {
             console.log(" something wrong in bayload of token ");
             return res.status(403).send({ message: " unauthorized user " })

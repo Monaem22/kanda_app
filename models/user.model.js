@@ -3,13 +3,17 @@ const bcrypt = require("bcrypt");
 
 const users_Schema = new mongoose.Schema(
   {
-    gender: {
-      type: String,
-      enum: ["ذكر", "انثي"],
-    },
-    address: String,
-    student_mobile: String,
-    parent_mobile: String,
+    Category: String,
+    file_status: String,
+    result: String,
+
+    file_number: String,
+    file_open_date: String,
+    file_category: String,
+    result_release_date: String,
+    travel_procedures_date: String,
+    travel_date: String,
+    
     //user auth
     nationality: String,
     birth_date: String,
@@ -39,7 +43,7 @@ const users_Schema = new mongoose.Schema(
   }
 );
 
-users_Schema.index({ name: 1 }, { unique: true });
+users_Schema.index({ name: 1 });
 users_Schema.index({ national_id: 1 }, { unique: true });
 
 users_Schema.pre("save", async function (next) {
