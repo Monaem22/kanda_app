@@ -23,7 +23,7 @@ const authUserController = {
             )
             res.cookie("access_token", `barear ${token}`,
                 {
-                    httpOnly: true,// Protect from client-side scripts
+                    // httpOnly: true,// Protect from client-side scripts
                     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',//Testing for Secure HTTPS Connections
                     // secure: process.env.NODE_ENV === 'production' ? true : req.secure || req.headers['x-forwarded-proto'] === 'https' // Secure only in production for HTTPS
                     sameSite: 'strict',// Prevent CSRF attacks
@@ -55,7 +55,7 @@ const authUserController = {
             )
             res.cookie("access_token", `barear ${token}`,
                 {
-                    httpOnly: true,// Protect from client-side scripts
+                    // httpOnly: true,// Protect from client-side scripts
                     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',//Testing for Secure HTTPS Connections
                     // secure: process.env.NODE_ENV === 'production' ? true : req.secure || req.headers['x-forwarded-proto'] === 'https' // Secure only in production for HTTPS
                     sameSite: 'strict',// Prevent CSRF attacks

@@ -13,6 +13,7 @@ const users_Schema = new mongoose.Schema(
     result_release_date: String,
     travel_procedures_date: String,
     travel_date: String,
+    image: String,
     
     //user auth
     nationality: String,
@@ -35,6 +36,18 @@ const users_Schema = new mongoose.Schema(
       enum: ['user', 'admin' , 'Sadmin'],
       default: 'user',
   },
+  members : [
+    {
+      full_name: String,
+      national_id: String,
+      birth_date: String,
+    }
+  ],
+
+  Submit_date: String,
+  status_received_date : String,
+  evaluation_completed_date : String,
+
 
   },
   {
