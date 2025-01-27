@@ -6,6 +6,8 @@ const uploading = require("../middlewares/uploud.middleware");
 // available for user
 router.get("/get_all_members/:user_id", authentication,adminController.get_all_members)
 router.get("/get_file_details/:user_id", authentication,adminController.get_file_details)
+router.get("/get_one_user/:user_id", authentication,adminController.get_one_user)
+
 
 router.use(adminAuthorization)
 
@@ -18,7 +20,6 @@ router.put("/edit_admin/:admin_id",adminController.edit_admin)
 router.post("/add_user" ,adminController.add_user)
 router.get("/get_all_users" ,adminController.get_all_users)
 router.delete("/delete_user/:user_id",adminController.delete_user)
-router.get("/get_one_user/:user_id",adminController.get_one_user)
 router.put("/edit_user/:user_id",adminController.edit_user)
 router.post("/Update_Image/:user_id" ,uploading.img_Uploading().single("profile_image"),adminController.Update_Image)
 
