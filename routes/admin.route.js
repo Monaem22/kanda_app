@@ -4,6 +4,8 @@ const { adminAuthorization , authentication } = require("../middlewares/auth.mid
 const uploading = require("../middlewares/uploud.middleware");
 
 // available for user
+router.get("/get_all_members/:user_id", authentication,adminController.get_all_members)
+router.get("/get_file_details/:user_id", authentication,adminController.get_file_details)
 
 router.use(adminAuthorization)
 
@@ -22,7 +24,8 @@ router.post("/Update_Image/:user_id" ,uploading.img_Uploading().single("profile_
 
 router.post("/add_member/:user_id",adminController.add_member)
 router.delete("/delete_member/:user_id/:member_id",adminController.delete_member)
-router.get("/get_all_members/:user_id",adminController.get_all_members)
 
+router.post("/add_file_details/:user_id",adminController.add_file_details)
+router.put("/edit_file_details/:user_id",adminController.edit_file_details)
 
 module.exports = router;

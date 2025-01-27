@@ -198,15 +198,40 @@ const admin_controller = {
             res.status(500).send({ message: error.message })
         }
     },
+    // file details
     add_file_details : async (req, res) => {
+        try {
+            const User = await user_model.findByIdAndUpdate(req.params.user_id , {
+                file_details: req.body
+            }, { new: true })
+            if (!User) {
+                return res.status(403).send({ error: "المستخدم صاحب الملف غير موجود" });
+            }
+            res.status(200).send({ message: "تم اضافة تفاصيل الملف بنجاح"})
+        } catch (error) {
+            res.status(500).send({ message: error.message })
+        }
+    },
+    get_file_details : async (req, res) => {
         try {
             const User = await user_model.findById(req.params.user_id)
             if (!User) {
                 return res.status(403).send({ error: "المستخدم صاحب الملف غير موجود" });
             }
-
-            await User.save()
-            res.status(200).send({ message: "تم حذف العضو بنجاح"})
+            res.status(200).send({ message: User.file_details })
+        } catch (error) {
+            res.status(500).send({ message: error.message })
+        }
+    },
+    edit_file_details : async (req, res) => {
+        try {
+            const User = await user_model.findByIdAndUpdate(req.params.user_id , {
+                file_details: req.body
+            }, { new: true })
+            if (!User) {
+                return res.status(403).send({ error: "المستخدم صاحب الملف غير موجود" });
+            }
+            res.status(200).send({ message: "تم تعديل تفاصيل الملف بنجاح"})
         } catch (error) {
             res.status(500).send({ message: error.message })
         }

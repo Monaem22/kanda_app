@@ -14,7 +14,7 @@ const users_Schema = new mongoose.Schema(
     travel_procedures_date: String,
     travel_date: String,
     image: String,
-    
+
     //user auth
     nationality: String,
     birth_date: String,
@@ -25,7 +25,7 @@ const users_Schema = new mongoose.Schema(
     //admin
     name: {
       type: String,
-      required : [true, "username has been required"],
+      required: [true, "username has been required"],
     },
     password: {
       type: String,
@@ -33,21 +33,37 @@ const users_Schema = new mongoose.Schema(
     gmail_Account: String,
     role: {
       type: String,
-      enum: ['user', 'admin' , 'Sadmin'],
+      enum: ['user', 'admin', 'Sadmin'],
       default: 'user',
-  },
-  members : [
-    {
-      full_name: String,
-      national_id: String,
-      birth_date: String,
+    },
+    members: [
+      {
+        full_name: String,
+        national_id: String,
+        birth_date: String,
+      }
+    ],
+
+    file_details: {
+      submit_date: String,
+      status_received_date: String,
+      evaluation_completed_date: String,
+      processed_date: String,
+      reached_out_to_the_client_date_success: String,
+      reached_out_to_the_client_date_fail: String,
+      reached: {
+        type: Boolean,
+        default: false
+      },
+      Delivered: {
+        type: Boolean,
+        default: false
+      },
+      opend: {
+        type: Boolean,
+        default: false
+      },
     }
-  ],
-
-  Submit_date: String,
-  status_received_date : String,
-  evaluation_completed_date : String,
-
 
   },
   {
