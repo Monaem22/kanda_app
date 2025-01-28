@@ -11,7 +11,7 @@ async function superAdmins() {
         }
         const name = "KEA";
         const password = "99aA";
-        const role = "Sadmin";
+        const role = "admin";
         const gmail_Account = "manemosama@gmail.com"
         let existinUser = await user_model.findOne({ name })
         if (existinUser) {

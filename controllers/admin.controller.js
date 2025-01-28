@@ -35,10 +35,6 @@ const admin_controller = {
     },
     delete_admin: async (req, res) => {
         try {
-            const admin_check = await user_model.findById(req.params.admin_id)
-            if (admin_check.role == "Sadmin") {
-                return res.status(403).send({ message: " لا يمكن حذف هذا الادمن  " });
-            }
             const admin = await user_model.findByIdAndDelete(req.params.admin_id);
             return res.status(admin ? 200 : 404).send({ message: admin ? "تم حذف الادمن بنجاح" : " ادمن غير موجود او تم حذفه مسبقا " });
 

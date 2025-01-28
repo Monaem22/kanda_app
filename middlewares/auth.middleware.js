@@ -34,7 +34,7 @@ const authentication = async (req, res, next) => {
 const adminAuthorization = async (req, res, next) => {
     try {
         authentication(req, res, () => {
-            if (req.user.role === "admin" || req.user.role === "Sadmin") {
+            if (req.user.role === "admin" ) {
                 return next()
             }
             return res.status(403).send({ message: "unauthorized user" })
