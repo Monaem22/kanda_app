@@ -13,7 +13,7 @@ cluster.setupPrimary({
 for (let i = 0; i < cpuCount; i++) {
     cluster.fork();
 }
-cluster.on("exit", (worker, code, signal) => {
+cluster.on("exit", (worker) => {
     console.log(`worker ${worker.process.pid} has been killed`);
     console.log("Starting another worker");
     cluster.fork();
