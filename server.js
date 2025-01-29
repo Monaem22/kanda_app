@@ -28,8 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression())
 app.use(limiter);
-app.use("/", Routes);
 app.use("/admin", express.static("./upload_image"));
+app.use("/", Routes);
 
 app.all('*', (req, res) => {
   res.status(404).send('Not Found routes');
