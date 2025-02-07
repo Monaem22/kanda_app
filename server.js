@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const rateLimiter = require("express-rate-limit");
 const compression = require('compression')
-
+const path = require("path");
 
 const port = 4444;
 dotenv.config();
@@ -29,11 +29,15 @@ app.use(cookieParser());
 app.use(compression())
 app.use(limiter);
 app.use("/admin", express.static("./upload_image"));
+app.use(express.static("dist"));
 app.use("/", Routes);
 
-app.all('*', (req, res) => {
-  res.status(404).send('Not Found routes');
-})
+// app.all('*', (req, res) => {
+//   res.status(404).send('Not Found routes');
+// })
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html')); // Or 'build'
+});
 app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).send('Internal Server Error',err.message);
